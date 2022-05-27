@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const publicUrl = process.env.PUBLIC_URL;
@@ -46,7 +47,7 @@ const Nav = () => {
 
           <div className="col-lg-4 col-md-4 col-sm-4 col-xl-4 float-left">
             <div className="col-lg-4 col-md-4 col-sm-4 col-xl-4 float-left">
-              <a href="/">Register</a>
+              <Link to="/registration">Register</Link>
             </div>
             <div className="col-lg-4 col-md-4 col-sm-4 col-xl-4 float-left">
               <a href="/" className="login-botton">

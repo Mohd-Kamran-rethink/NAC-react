@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
-
+import axios from "axios";
 import Search from "../Search/Search";
 import ReCenter from "../ReCenter/ReCenter";
 
@@ -29,7 +29,7 @@ const defaultRegistrationFields = {
 
 const RegistrationForm = () => {
   const [registration, setRegistration] = useState(defaultRegistrationFields);
-  const { name, contact, email, coordinates } = registration;
+  const { name,password,  email,phone, coordinates } = registration;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,7 +38,11 @@ const RegistrationForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    localStorage.setItem("registration", JSON.stringify(registration));
+   axios.post("http://127.0.0.1:8000/api/addusers",registration)
+   .then(response=>{
+    console.log(response);
+    console.log(registration);
+   })
   };
 
   const onMapClick = useCallback(
@@ -67,6 +71,7 @@ const RegistrationForm = () => {
     },
     [registration]
   );
+  
 
   return (
     <div className="registration-form-container">
@@ -74,7 +79,7 @@ const RegistrationForm = () => {
 
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name of your Business</label>
+          <label>Name of your Business</label>
           <div>
             <input
               type="text"
@@ -87,18 +92,7 @@ const RegistrationForm = () => {
           </div>
         </div>
 
-        <div>
-          <label htmlFor="contact">Contact</label>
-          <div>
-            <input
-              type="text"
-              name="contact"
-              id="contact"
-              onChange={handleChange}
-              value={contact}
-            />
-          </div>
-        </div>
+        
 
         <div>
           <label htmlFor="email">Email address</label>
@@ -112,9 +106,33 @@ const RegistrationForm = () => {
             />
           </div>
         </div>
+        <div>
+          <label >Enter Your Password</label>
+          <div>
+            <input
+              
+              name="password"
+              id="password"
+              onChange={handleChange}
+              value={password}
+            />
+          </div>
+        </div>
+        <div>
+          <label htmlFor="phone">Phone</label>
+          <div>
+            <input
+              type="text"
+              name="phone"
+              id="contact"
+              onChange={handleChange}
+              value={phone}
+            />
+          </div>
+        </div>
 
         <div>
-          <label htmlFor="address">Address</label>
+          <label >Address</label>
           <div className="map-container">
             <Search panTo={panTo} setAddress={setAddress} />
 
